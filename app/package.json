@@ -1,6 +1,6 @@
 {
   "name": "ebproject",
-  "main": "views/index.html",
+  "main": "index.html",
   "version": "0.0.1",
   "single-instance": true,
   "window": {
