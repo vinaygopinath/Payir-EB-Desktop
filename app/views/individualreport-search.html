@@ -1,0 +1,46 @@
+<!-- Title of the page -->
+<div class="row">
+    <div class="col-md-offset-1 col-md-11">
+        <h3 class="payir-heading">Individual Report</h3>
+    </div>
+</div>
+
+<!-- Search options (Service no. OR (name and village), search button) -->
+<!-- TODO Add message explaining how to search -->
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="serviceNo">Service No.</label>
+                <input type="text" class="form-control" id="serviceNo" placeholder="000000">
+            </div>
+            <div class="form-group mlm">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Sekar">
+            </div>
+            <div class="form-group mlm">
+                <label for="village">Village</label>
+                <input type="text" class="form-control" id="village" placeholder="Thenur">
+            </div>
+            <button type="submit" class="mlm btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- Table of search results -->
+<div class="row mtm">
+    <div class="col-md-offset-1 col-md-10">
+        <table class="table table-bordered">
+            <tr>
+                <th>Serial No</th>
+                <th>
+                    <a href="#/report/individual/1234">Service No</a>
+                </th>
+                <th>Name</th>
+                <th>Mobile No</th>
+                <th>Village</th>
+                <th>Address</th>
+            </tr>
+        </table>
+    </div>
+</div>
