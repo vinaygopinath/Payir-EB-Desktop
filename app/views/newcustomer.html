@@ -1,14 +1,17 @@
+<!-- Title of the page -->
 <div class="row">
-<div class="col-md-offset-1 col-md-11">  <h3> New Customer</h3> 
+    <div class="col-md-offset-1 col-md-11">
+        <h3 class="payir-heading">New Customer</h3>
     </div>
 </div>
 
+<!-- Input boxes for customer information -->
+<!-- TODO Handle date input -->
 <div class="row">
-    <div class="col-md-1"> </div>
-    <div class="col-md-5">
+    <div class="col-md-offset-1 col-md-5">
         <form class="form inline">
             <div class="form-group">
-                <label for="Service no">Service no</label>
+                <label for="Service no">Service No.</label>
                 <input type="text" class="form-control" id="Service no" placeholder="Service no">
             </div>
         </form>
@@ -20,7 +23,7 @@
         </form>
         <form class="form inline">
             <div class="form-group">
-                <label for="E-mail id">E-mail id</label>
+                <label for="E-mail id">E-mail ID</label>
                 <input type="text" class="form-control" id="E-mail id" placeholder="E-mail id">
             </div>
         </form>
@@ -38,7 +41,7 @@
         </form>
         <form class="form inline">
             <div class="form-group">
-                <label for="Mobile no">Mobile no</label>
+                <label for="Mobile no">Mobile No.</label>
                 <input type="text" class="form-control" id="Mobile no" placeholder="Mobile no">
             </div>
         </form>
@@ -58,7 +61,7 @@
         </form>
         <form class="form inline">
             <div class="form-group">
-                <label for="Date of Join">Date of Join</label>
+                <label for="Date of Join">Date of Joining</label>
                 <input type="text" class="form-control" id="Date of Join" placeholder="Date of Join">
             </div>
         </form>
@@ -76,6 +79,13 @@
         </form>
     </div>
 </div>
-<input class="btn btn-success" value="Save"/>
-<input class="btn btn-danger" value="Clear"/>
-  <div class="col-md-1"> </div>
+
+<!-- Show the two buttons in the center of a 12-column div inside a row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center">
+            <input class="btn btn-success" value="Save" />
+            <input class="btn btn-danger" value="Clear" />
+        </div>
+    </div>
+</div>
