@@ -1,50 +1,66 @@
 <!DOCTYPE html>
 <html ng-app="Payir-EB-Desktop-App">
+
 <head>
-  <title>Payir Electricity Board</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />-->
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <title>Payir Electricity Board</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
 </head>
 
 <body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Payir EB Data Management</a>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Payir EB Data Management</a>
-      </div>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar payir-sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="#/customer/new">New Customer</a>
+                    </li>
+                    <li><a href="#/payment/new">Bill Payment</a>
+                    </li>
+                    <li><a href="">Reports</a>
+                    </li>
+                    <!-- TODO Expand menu on Reports click -->
+                    <li class="sub-menu-item"><a href="#/report/individual">Individual Report</a>
+                    </li>
+                    <li class="sub-menu-item"><a href="#/report/time">Time Report</a>
+                    </li>
+                    <li class="sub-menu-item"><a href="#/report/paymentdue">Payment Due Report</a>
+                    </li>
+                    <li class="sub-menu-item"><a href="#/report/notpaid">Not Paid Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-3 col-md-2 sidebar payir-sidebar">
-        <ul class="nav nav-sidebar">
-          <li class="active"><a href="/customer/new">New Customer</a></li>
-          <li><a href="/payment/new">Bill Payment</a></li>
-          <li><a href="">Reports</a></li>
-          <!-- TODO Expand menu on Reports click -->
-          <li class="sub-menu-item"><a href="/report/individual">Individual Report</a></li>
-          <li class="sub-menu-item"><a href="/report/time">Time Report</a></li>
-          <li class="sub-menu-item"><a href="/report/paymentdue">Payment Due Report</a></li>
-          <li class="sub-menu-item"><a href="/report/notpaid">Not Paid Report</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-    <div ng-view>
-    </div>
-    <!-- build:js scripts/vendor.js -->
-    <script src="../bower_components/angular/angular.js"></script>
-    <!-- endbuild -->
-    
-    <!-- build:js scripts/scripts.js -->
-    <script src="js/app.js"></script>
-    <!-- endbuild -->
-  </body>
-  
-  </html>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+        <div ng-view>
+        </div>
+        <!-- build:js scripts/vendor.js -->
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-route/angular-route.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/intro.js"></script>
+        <script src="scripts/controllers/newcustomer.js"></script>
+        <script src="scripts/controllers/newpayment.js"></script>
+        <script src="scripts/controllers/individualreport.js"></script>
+        <script src="scripts/controllers/timereport.js"></script>
+        <script src="scripts/controllers/paymentduereport.js"></script>
+        <script src="scripts/controllers/notpaidreport.js"></script>
+        <!-- endbuild -->
+</body>
+
+</html>
