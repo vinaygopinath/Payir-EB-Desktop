@@ -11,6 +11,10 @@ angular.module('Payir-EB-Desktop-App', [
             controller: 'NewPaymentCtrl'
         })
         .when('/report/individual', {
+            templateUrl: 'views/individualreport-search.html',
+            controller: 'IndividualReportSearchCtrl'
+        })
+        .when('/report/individual/:serviceNo', {
             templateUrl: 'views/individualreport.html',
             controller: 'IndividualReportCtrl'
         })

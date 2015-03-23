@@ -1,8 +1,64 @@
+/*
+Make sure that the sidebar contents are not hidden
+by the top navbar
+*/
+
 .payir-sidebar {
-  top: 80px;
+    top: 80px;
 }
+/*
+Make sure that the main area content is not hidden
+by the top navbar + show a scrollbar for the main area
+if necessary
+*/
+
+.payir-main-area {
+    top: 80px;
+    overflow-y: scroll;
+}
+/*
+Push the sub menu items slightly inside.
+Used for each of the reports in the "Reports" section
+*/
 
 .sub-menu-item {
-  margin-left: 8px;
-  font-size: 13px;
+    margin-left: 8px;
+    font-size: 13px;
+}
+/*
+The title of each page
+*/
+
+.payir-heading {
+    margin-left: 2%;
+    margin-bottom: 2%;
+    text-transform: capitalize;
+}
+/* 
+Margin top medium
+*/
+
+.mtm {
+    margin-top: 1.5em;
+}
+/* 
+Margin bottom medium
+*/
+
+.mbm {
+    margin-bottom: 1.5em;
+}
+/* 
+Margin left medium
+*/
+
+.mlm {
+    margin-left: 1.5em;
+}
+/* 
+Margin right medium
+*/
+
+.mrm {
+    margin-right: 1.5em;
 }
