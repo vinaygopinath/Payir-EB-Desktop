@@ -1,6 +1,6 @@
 <!-- Title of the page -->
 <div class="row">
-    <div class="col-md-offset-1 col-md-11">
+    <div class="col-xs-offset-1 col-xs-11 col-md-offset-1 col-md-11">
         <h3 class="payir-heading">New Customer</h3>
     </div>
 </div>
@@ -8,7 +8,7 @@
 <!-- Input boxes for customer information -->
 <!-- TODO Handle date input -->
 <div class="row">
-    <div class="col-md-offset-1 col-md-5">
+    <div class="col-xs-5 col-md-offset-1 col-md-4">
         <form class="form inline">
             <div class="form-group">
                 <label for="Service no">Service No.</label>
@@ -30,7 +30,7 @@
         <form class="form inline">
             <div class="form-group">
                 <label for="Date of birth">Date of birth</label>
-                <input type="text" class="form-control" id="Date of birth" placeholder="Date of birth">
+                <input type="date" class="form-control" id="Date of birth" placeholder="Date of birth">
             </div>
         </form>
         <form class="form inline">
@@ -46,7 +46,7 @@
             </div>
         </form>
     </div>
-    <div class="col-md-5">
+    <div class="col-xs-5 col-md-4">
         <form class="form inline">
             <div class="form-group">
                 <label for="Name">Name</label>
@@ -62,13 +62,13 @@
         <form class="form inline">
             <div class="form-group">
                 <label for="Date of Join">Date of Joining</label>
-                <input type="text" class="form-control" id="Date of Join" placeholder="Date of Join">
+                <input type="date" class="form-control" id="Date of Join" placeholder="Date of Join">
             </div>
         </form>
         <form class="form inline">
             <div class="form-group">
                 <label for="Due date">Due date</label>
-                <input type="text" class="form-control" id="Due date" placeholder="Due date">
+                <input type="date" class="form-control" id="Due date" placeholder="Due date">
             </div>
         </form>
         <form class="form inline">
@@ -82,10 +82,10 @@
 
 <!-- Show the two buttons in the center of a 12-column div inside a row -->
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-xs-8 col-md-12">
         <div class="text-center">
-            <input class="btn btn-success" value="Save" />
-            <input class="btn btn-danger" value="Clear" />
+            <button type="submit" class="btn btn-success">Save</button>
+            <button class="btn btn-danger">Clear</button>
         </div>
     </div>
 </div>
