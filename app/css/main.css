@@ -34,6 +34,12 @@ The title of each page
     margin-bottom: 2%;
     text-transform: capitalize;
 }
+/*
+Margin top small
+*/
+.mts {
+    margin-top: 0.5em;
+}
 /* 
 Margin top medium
 */
