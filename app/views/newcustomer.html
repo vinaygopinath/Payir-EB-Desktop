@@ -9,72 +9,69 @@
 <!-- TODO Handle date input -->
 <div class="row">
     <div class="col-xs-offset-1 col-xs-5 col-md-offset-1 col-md-3">
-        <form class="form inline">
+        <form name="custForm">
             <div class="form-group">
                 <label>Service No.</label>
-                <input type="text" class="form-control" placeholder="A001 ">
-            </div>
-        </form>
-        <form class="form inline">
-            <div class="form-group">
-                <label >Username</label>
-                <input type="text" class="form-control" placeholder="JohnA001">
-            </div>
-        </form>
-        <form class="form inline">
-            <div class="form-group">
-                <label>E-mail ID</label>
-                <input type="text" class="form-control" placeholder="abcd@gmail.com">
-            </div>
-        </form>
-        <form class="form inline">
-            <div class="form-group">
-                <label>Date of birth</label>
-                <input type="date" class="form-control">
-            </div>
-        </form>
-        <form class="form inline">
-            <div class="form-group">
-                <label>Address</label>
-                <textarea class="form-control" rows="5" placeholder="4/82, Thenur"></textarea>
+                <input type="number" name="serviceNo" class="form-control" placeholder="A001" ng-model="cust.serviceNo" ng-minlength="5" ng-maxlength="15" required>
+                <ng-messages class="form-error" for="custForm.serviceNo.$error" ng-messages-include="views/error-messages.html">
+                    <div class="message" ng-message="number">This is an invalid number</div>
+                </ng-messages>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" placeholder="JohnA001" ng-model="cust.username">
+                    <ng-messages class="form-error" for="custForm.username.$error" ng-messages-include="views/error-messages.html">
+                    </ng-messages>
+                </div>
+                <div class="form-group">
+                    <label>E-mail ID</label>
+                    <input type="email" name="email" class="form-control" placeholder="abcd@gmail.com" ng-model="cust.email">
+                    <ng-messages class="form-error" for="custForm.email.$error" ng-messages-include="views/error-messages.html">
+                        <div class="message" ng-message="email">This is an invalid email address</div>
+                    </ng-messages>
+                </div>
+                <div class="form-group">
+                    <label>Date of birth</label>
+                    <input type="date" name="dateOfBirth" class="form-control" ng-model="tempDateOfBirth">
+                    <ng-messages class="form-error" for="custForm.dateOfBirth.$error" ng-messages-include="views/error-messages.html">
+                        <div class="message" ng-message="date">This is an invalid date</div>
+                    </ng-messages>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="address" rows="5" placeholder="4/82, Thenur" ng-model="cust.address">
+                    </textarea>
+                    <ng-messages class="form-error" for="custForm.address.$error" ng-messages-include="views/error-messages.html">
+                    </ng-messages>
+                </div>
             </div>
         </form>
     </div>
     <div class="col-xs-5 col-md-3">
-        <form class="form inline">
+        <form>
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" placeholder="Johnson">
+                <input type="text" class="form-control" placeholder="Johnson" ng-model="cust.name">
             </div>
-        </form>
-        <form class="form inline">
             <div class="form-group">
                 <label>Password</label>
-                <input type="text" class="form-control" placeholder="*******">
+                <input type="password" class="form-control" placeholder="*******" ng-model="cust.password">
             </div>
-        </form>
-        <form class="form inline">
             <div class="form-group">
                 <label>Date of Joining</label>
-                <input type="date" class="form-control">
+                <input type="date" class="form-control" ng-model="tempDateOfJoining">
             </div>
-        </form>
-        <form class="form inline">
             <div class="form-group">
                 <label>Due date</label>
-                <input type="date" class="form-control">
+                <pre>{{cust.dueDate}}</pre>
+                <input type="date" class="form-control" ng-model="tempDueDate">
             </div>
-        </form>
-        <form class="form inline">
             <div class="form-group">
                 <label>Village</label>
-                <input type="text" class="form-control" placeholder="Thenur">
+                <input type="text" class="form-control" placeholder="Thenur" ng-model="cust.village">
             </div>
-        </form>
-        <form class="form inline">
             <div class="form-group">
                 <label>Mobile No.</label>
-                <input type="text" class="form-control" placeholder="1234567890">
+                <input type="text" class="form-control" placeholder="1234567890" ng-model="cust.mobileNo">
             </div>
         </form>
     </div>
@@ -82,8 +79,7 @@
 <!-- Show the two buttons in the center of a 12-column div inside a row -->
 <div class="row">
     <div class="col-xs-offset-1 col-xs-11 col-md-offset-1 col-md-11">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button class="btn btn-danger">Clear</button>
+        <button type="submit" class="btn btn-success" ng-click="saveCustomer()">Save</button>
+        <button class="btn btn-danger" ng-click="clearCustomer()">Clear</button>
     </div>
 </div>
-

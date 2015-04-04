@@ -37,6 +37,7 @@ The title of each page
 /*
 Margin top small
 */
+
 .mts {
     margin-top: 0.5em;
 }
@@ -67,4 +68,46 @@ Margin right medium
 
 .mrm {
     margin-right: 1.5em;
+}
+
+.animate-show {
+    opacity: 1;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+    -webkit-transition: all linear 0.5s;
+    transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+    opacity: 0;
+}
+
+.form-error {
+    opacity: 0;
+}
+
+.form-error.ng-active {
+    opacity: 1;
+}
+
+.form-error.ng-inactive {
+    opacity: 0;
+}
+
+.form-error > .message.ng-enter,
+.form-error > .message.ng-leave {
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+}
+
+.form-error > .message.ng-enter,
+.form-error > .message.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.form-error > .message.ng-leave,
+.form-error > .message.ng-enter.ng-enter-active {
+    opacity: 1;
 }

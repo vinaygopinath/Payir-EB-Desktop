@@ -5,31 +5,25 @@
 </div>
 <div class="row">
     <div class="col-xs-offset-1 col-xs-5 col-md-offset-1 col-md-3">
-        <form class="form inline">
-            <div class="form-group">
-                <label>Service No.</label>
-                <input type="text" class="form-control" placeholder="A001 ">
-            </div>
-        </form>
-        <form class="form inline">
-            <div class="form-group">
-                <label>Amount</label>
-                <input type="text" class="form-control" placeholder="100">
-            </div>
-        </form>
-        <form class="form inline">
-            <div class="form-group">
-                <label>Payment Date</label>
-                <input type="date" class="form-control">
-            </div>
-        </form>
+        <div class="form-group">
+            <label>Service No.</label>
+            <input type="text" class="form-control" placeholder="A001" ng-model="payment.serviceNo">
+        </div>
+        <div class="form-group">
+            <label>Amount</label>
+            <input type="text" class="form-control" placeholder="100" ng-model="payment.amount">
+        </div>
+        <div class="form-group">
+            <pre>{{tempPaymentDate}}</pre>
+            <label>Payment Date</label>
+            <input type="date" class="form-control" ng-model="tempPaymentDate">
+        </div>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-offset-1 col-xs-11 col-md-offset-1 col-md-11">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button class="btn btn-danger">Clear</button>
+        <button type="submit" class="btn btn-success" ng-click="savePayment()">Save</button>
+        <button class="btn btn-danger" ng-click="clearPayment()">Clear</button>
 
     </div>
 </div>
-
