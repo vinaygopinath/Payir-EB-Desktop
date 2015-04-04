@@ -13,22 +13,27 @@ angular.module('Payir-EB-Desktop-App')
 
         function isValidCustomer(cust, dueDate) {
             console.log("serviceNo = ", cust.serviceNo);
-            console.log("serviceNo length = ", cust.serviceNo.length > 5);
             console.log("name", cust.name);
-            console.log("name >= 3 ", cust.name.length >= 3);
             console.log("dueDate = ", cust.dueDate);
             console.log("village = ", cust.village);
-            return (cust.serviceNo && cust.serviceNo.length > 5 && cust.name && cust.name.length >= 3 && dueDate && cust.village);
+            return (cust.serviceNo && cust.serviceNo.length >= 5 && cust.name && cust.name.length >= 3 && dueDate && cust.village);
         }
 
         function isValidPayment(payment, tempDate) {
             console.log("Payment = ", payment);
             console.log("Temp date = ", tempDate);
-            return (payment.serviceNo && payment.serviceNo.length > 5 && payment.amount && tempDate);
+            return (payment.serviceNo && payment.serviceNo.length >= 5 && payment.amount && tempDate);
+        }
+
+        function isValidIndReportSearch(search) {
+            if (search.serviceNo && search.serviceNo.length >= 5) {
+
+            }
         }
 
         return {
             "isValidCustomer": isValidCustomer,
-            "isValidPayment": isValidPayment
+            "isValidPayment": isValidPayment,
+            "isValidIndReportSearch": isValidIndReportSearch
         }
     });

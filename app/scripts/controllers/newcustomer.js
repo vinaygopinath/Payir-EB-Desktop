@@ -8,8 +8,9 @@
  * Controller of the Payir-EB-Desktop-App
  */
 angular.module('Payir-EB-Desktop-App')
-    .controller('NewCustomerCtrl', function ($scope, DBService, VldService, $filter) {
+    .controller('NewCustomerCtrl', function ($scope, DBService, VldService, $filter, $timeout) {
         $scope.cust = {};
+        $scope.hasInpError = false;
 
         $scope.clearCustomer = function () {
             $scope.cust = {};
@@ -32,9 +33,22 @@ angular.module('Payir-EB-Desktop-App')
                 console.log("inside isValid");
                 DBService.saveCustomer($scope.cust).then(function (succ) {
                     console.log("Successfully saved customer!");
+                    $scope.isSaved = true;
+                    $timeout(function () {
+                        $scope.isSaved = false;
+                    }, 5000);
                 }, function (err) {
                     console.log("Errorred: ", err);
                 });
+            } else {
+                console.log("Customer data is not valid");
+//                console.log("Before: ", $scope.hasInpError);
+//                $scope.hasInpError = true;
+//                console.log("After: ", $scope.hasInpError);
+//                $timeout(function () {
+//                    $scope.hasInpError = false;
+//                    console.log("After sometime: ", $scope.hasInpError);
+//                }, 5000);
             }
         };
     });

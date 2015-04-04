@@ -45,5 +45,5 @@ angular.module('Payir-EB-Desktop-App', [
         $rootScope.toggleReports = function () {
             console.log("Toggling report");
             $rootScope.showReports = !$rootScope.showReports;
-        }
+        };
     }]);

@@ -5,44 +5,51 @@
     </div>
 </div>
 
+<!--
+<div class="row">
+    <p class="alert alert-success animate-show" ng-show="saveSucc">Customer data was saved!</p>
+    <p class="alert alert-warning animate-show" ng-show="saveFailed">There was an error while saving data</p>
+    <p class="alert alert-warning animate-show" ng-show="hasInpErr">Your input has errors. Please correct them</p>
+</div>
+-->
+
 <!-- Input boxes for customer information -->
-<!-- TODO Handle date input -->
 <div class="row">
     <div class="col-xs-offset-1 col-xs-5 col-md-offset-1 col-md-3">
         <form name="custForm">
             <div class="form-group">
                 <label>Service No.</label>
                 <input type="number" name="serviceNo" class="form-control" placeholder="A001" ng-model="cust.serviceNo" ng-minlength="5" ng-maxlength="15" required>
-                <ng-messages class="form-error" for="custForm.serviceNo.$error" ng-messages-include="views/error-messages.html">
+                <ng-messages for="custForm.serviceNo.$error" class="form-error" ng-messages-include="views/error-messages.html">
                     <div class="message" ng-message="number">This is an invalid number</div>
                 </ng-messages>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="username" class="form-control" placeholder="JohnA001" ng-model="cust.username">
-                    <ng-messages class="form-error" for="custForm.username.$error" ng-messages-include="views/error-messages.html">
-                    </ng-messages>
-                </div>
-                <div class="form-group">
-                    <label>E-mail ID</label>
-                    <input type="email" name="email" class="form-control" placeholder="abcd@gmail.com" ng-model="cust.email">
-                    <ng-messages class="form-error" for="custForm.email.$error" ng-messages-include="views/error-messages.html">
-                        <div class="message" ng-message="email">This is an invalid email address</div>
-                    </ng-messages>
-                </div>
-                <div class="form-group">
-                    <label>Date of birth</label>
-                    <input type="date" name="dateOfBirth" class="form-control" ng-model="tempDateOfBirth">
-                    <ng-messages class="form-error" for="custForm.dateOfBirth.$error" ng-messages-include="views/error-messages.html">
-                        <div class="message" ng-message="date">This is an invalid date</div>
-                    </ng-messages>
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="address" rows="5" placeholder="4/82, Thenur" ng-model="cust.address">
-                    </textarea>
-                    <ng-messages class="form-error" for="custForm.address.$error" ng-messages-include="views/error-messages.html">
-                    </ng-messages>
-                </div>
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" placeholder="JohnA001" ng-model="cust.username">
+                <ng-messages class="form-error" for="custForm.username.$error" ng-messages-include="views/error-messages.html">
+                </ng-messages>
+            </div>
+            <div class="form-group">
+                <label>E-mail ID</label>
+                <input type="email" name="email" class="form-control" placeholder="abcd@gmail.com" ng-model="cust.email">
+                <ng-messages class="form-error" for="custForm.email.$error" ng-messages-include="views/error-messages.html">
+                    <div class="message" ng-message="email">This is an invalid email address</div>
+                </ng-messages>
+            </div>
+            <div class="form-group">
+                <label>Date of birth</label>
+                <input type="date" name="dateOfBirth" class="form-control" ng-model="tempDateOfBirth">
+                <ng-messages class="form-error" for="custForm.dateOfBirth.$error" ng-messages-include="views/error-messages.html">
+                    <div class="message" ng-message="date">This is an invalid date</div>
+                </ng-messages>
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <textarea class="form-control" name="address" rows="5" placeholder="4/82, Thenur" ng-model="cust.address">
+                </textarea>
+                <ng-messages class="form-error" for="custForm.address.$error" ng-messages-include="views/error-messages.html">
+                </ng-messages>
             </div>
         </form>
     </div>
