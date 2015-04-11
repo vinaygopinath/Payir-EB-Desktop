@@ -9,7 +9,8 @@
         "height": 650,
         "min_width": 650,
         "min_height": 650,
-        "toolbar": true
+        "toolbar": true,
+        "icon": "images/icon.png"
     },
     "chromium-args": "--child-clean-exit"
 }

@@ -34,7 +34,7 @@
 </div>
 <div class="row mts">
     <div class="col-xs-offset-1 col-md-offset-1 col-xs-11 col-md-11">
-        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        <button type="submit" class="btn btn-primary btn-sm" ng-click="runSearch()">Search</button>
         <button class="btn btn-primary btn-sm mlm" ng-click="clearSearch()">Clear</button>
     </div>
 </div>
@@ -42,17 +42,31 @@
 <!-- Table of search results -->
 <div class="row mtm">
     <div class="col-xs-offset-1 col-xs-10 col-md-offset-1 col-md-10">
-        <table class="table table-bordered">
-            <tr>
-                <th>S.No.</th>
-                <th>
-                    <a href="#/report/individual/1234">Service No.</a>
-                </th>
-                <th>Name</th>
-                <th>Mobile No.</th>
-                <th>Village</th>
-                <th>Address</th>
-            </tr>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Service No.</th>
+                        <th>Name</th>
+                        <th>Mobile No.</th>
+                        <th>Village</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="customer in results" class="animate-show" ng-click="openCustomerInfo(customer.serviceNo)">
+                        <a ng-href="#/report/individual/{{customer.serviceNo}}">
+                            <td>{{$index+1}}</td>
+                            <td>{{customer.serviceNo}}</td>
+                            <td>{{customer.name}}</td>
+                            <td>{{customer.mobileNo}}</td>
+                            <td>{{customer.village}}</td>
+                            <td>{{customer.address}}</td>
+                        </a>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

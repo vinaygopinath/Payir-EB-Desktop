@@ -1,0 +1,3 @@
+INSERT INTO `payir_eb`.`customer` (`serviceNo`, `name`, `dateOfBirth`, `dateOfJoining`, `dueDate`, `mobileNo`, `address`, `village`, `username`, `password`, `email`) VALUES ('11223344', 'ABC', '1990-01-01', '2015-01-01', '2015-04-20', '9751234323', 'ABC DEF GHI', 'Thenur', 'abcdef', 'password', 'abcdef@gmail.com');
+INSERT INTO `payir_eb`.`customer` (`serviceNo`, `name`, `dateOfBirth`, `dateOfJoining`, `dueDate`, `mobileNo`, `address`, `village`, `username`, `password`) VALUES ('111222333', 'DEF', '1988-02-05', '2015-04-01', '2015-04-10', '123456789', 'DEF GHI JKL', 'Thottiyapatti', 'defaccount', 'passw0rd');
+

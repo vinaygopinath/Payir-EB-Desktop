@@ -5,13 +5,9 @@
     </div>
 </div>
 
-<!--
-<div class="row">
-    <p class="alert alert-success animate-show" ng-show="saveSucc">Customer data was saved!</p>
-    <p class="alert alert-warning animate-show" ng-show="saveFailed">There was an error while saving data</p>
-    <p class="alert alert-warning animate-show" ng-show="hasInpErr">Your input has errors. Please correct them</p>
-</div>
--->
+<p class="animate-show" ng-show="saveSucc">Customer data was saved!</p>
+<p class="alert alert-warning animate-show" ng-show="saveFailed">There was an error while saving data</p>
+<p class="animate-show" ng-show="hasInpErr">Your input has errors. Please correct them</p>
 
 <!-- Input boxes for customer information -->
 <div class="row">
@@ -69,7 +65,6 @@
             </div>
             <div class="form-group">
                 <label>Due date</label>
-                <pre>{{cust.dueDate}}</pre>
                 <input type="date" class="form-control" ng-model="tempDueDate">
             </div>
             <div class="form-group">

@@ -11,14 +11,14 @@ angular.module('Payir-EB-Desktop-App')
     .controller('NewCustomerCtrl', function ($scope, DBService, VldService, $filter, $timeout) {
         $scope.cust = {};
         $scope.hasInpError = false;
+        $scope.saveSucc = false;
+        $scope.saveFailed = false;
 
         $scope.clearCustomer = function () {
             $scope.cust = {};
         };
 
         $scope.saveCustomer = function () {
-            console.log("saveCustomer");
-            console.log("TempDueDate =", $scope.tempDueDate);
             if (VldService.isValidCustomer($scope.cust, $scope.tempDueDate)) {
                 $scope.cust.dueDate = $filter("date")($scope.tempDueDate, "yyyy-MM-dd");
 
@@ -42,13 +42,13 @@ angular.module('Payir-EB-Desktop-App')
                 });
             } else {
                 console.log("Customer data is not valid");
-//                console.log("Before: ", $scope.hasInpError);
-//                $scope.hasInpError = true;
-//                console.log("After: ", $scope.hasInpError);
-//                $timeout(function () {
-//                    $scope.hasInpError = false;
-//                    console.log("After sometime: ", $scope.hasInpError);
-//                }, 5000);
+                console.log("Before: ", $scope.hasInpError);
+                $scope.hasInpError = true;
+                console.log("After: ", $scope.hasInpError);
+                $timeout(function () {
+                    $scope.hasInpError = false;
+                    console.log("After sometime: ", $scope.hasInpError);
+                }, 5000);
             }
         };
     });
