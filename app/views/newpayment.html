@@ -5,20 +5,37 @@
 </div>
 <div class="row">
     <div class="col-xs-offset-1 col-xs-5 col-md-offset-1 col-md-3">
-        <div class="form-group">
-            <label>Service No.</label>
-            <input type="text" class="form-control" placeholder="A001" ng-model="payment.serviceNo">
-        </div>
-        <div class="form-group">
-            <label>Amount</label>
-            <input type="text" class="form-control" placeholder="100" ng-model="payment.amount">
-        </div>
-        <div class="form-group">
-            <label>Payment Date</label>
-            <input type="date" class="form-control" ng-model="tempPaymentDate">
-        </div>
+        <form name="payForm">
+
+            <div class="form-group">
+                <label>Service No.</label>
+                <input type="number" name="serviceNo" class="form-control" placeholder="A001" ng-model="payment.serviceNo" ng-minlength="3" ng-maxlength="9" required>
+                <ng-messages class="form-error" for="payForm.serviceNo.$error" ng-messages-include="views/error-messages.html">
+                    <div class="message" ng-message="number">This is an invalid number</div>
+                </ng-messages>
+            </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" name="amount" class="form-control" placeholder="100" ng-model="payment.amount" ng-minlength="1" ng-maxlength="9" ng-min="1" required>
+                <ng-messages class="form-error" for="payForm.amount.$error" ng-messages-include="views/error-messages.html">
+                    <div class="message" ng-message="number">This is an invalid amount</div>
+                    <div class="message" ng-message="min">This number is too low</div>
+
+                </ng-messages>
+            </div>
+
+            <div class="form-group">
+                <label>Payment Date</label>
+                <input type="date" name="paymentDate" class="form-control" ng-model="tempPaymentDate" required>
+                <ng-messages class="form-error" for="payForm.paymentDate.$error" ng-messages-include="views/error-messages.html">
+                    <div class="message" ng-message="date">This is an invalid date</div>
+                </ng-messages>
+            </div>
+        </form>
     </div>
 </div>
+
 <div class="row">
     <div class="col-xs-offset-1 col-xs-11 col-md-offset-1 col-md-11">
         <button type="submit" class="btn btn-success" ng-click="savePayment()">Save</button>
