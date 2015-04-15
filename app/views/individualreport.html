@@ -1,18 +1,21 @@
 <!-- Title of the page - the name of the individual, in this case -->
-<div class="row" ng-show="cust">
+<div class="row mbm" ng-show="cust">
     <div class="col-xs-offset-1 col-xs-11 col-md-offset-1 col-md-11">
-        <h3 class="payir-heading">{{cust.name}}</h3>
+        <h3 class="payir-heading">
+            {{cust.name}}
+        </h3>
+        <button class="btn btn-primary btn-sm" ng-click="editCustomer()">Edit</button>
+        <button class="btn btn-danger btn-sm" ng-click="deleteCustomer()">Delete</button>
     </div>
 </div>
 
-<!-- TODO Refine these error messages -->
-<div class="alert alert-danger animate-show" ng-show="fetchedCust && hasCustError">
-    There was an error while getting stuff</div>
+<div class="alert alert-danger animate-show" ng-show="hasCustError">
+    Unexpected error while loading customer details</div>
 
-<div class="alert alert-success animate-show" ng-show="fetchedCust && !hasCustError && !cust">
-    No results found!</div>
+<div class="alert alert-danger animate-show" ng-show="hasNoCust">
+    Customer details not found</div>
 
-<div class="alert alert-success animate-show" ng-show="!fetchedCust">
+<div class="alert alert-success animate-show" ng-show="isLoadingCust">
     Loading</div>
 
 <!-- Customer information -->
@@ -67,13 +70,12 @@
     </div>
 </div>
 
-<!-- Refine these error messages -->
-<div class="alert alert-danger animate-show" ng-show="fetchedHist && hasHistError">
-    There was an error while getting stuff</div>
+<div class="alert alert-danger animate-show" ng-show="!hasCustError && hasHistError">
+    Unexpected error while loading customer history</div>
 
-<div class="alert alert-success animate-show" ng-show="fetchedHist && !hasHistError && !payments">
-    No payment history found!</div>
-<div class="alert alert-success animate-show" ng-show="!fetchedHist">
+<div class="alert alert-success animate-show" ng-show="!hasNoCust && hasNoHist">
+    No payment history found for this customer</div>
+<div class="alert alert-success animate-show" ng-show="isLoadingHist">
     Loading payment history</div>
 
 <!-- Bill payment history of the individual -->

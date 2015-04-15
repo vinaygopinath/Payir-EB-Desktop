@@ -31,7 +31,7 @@ angular.module('Payir-EB-Desktop-App')
         }
 
         function isValidIndReportSearch(search) {
-            if ((search.serviceNo && search.serviceNo.trim() && search.serviceNo.trim().length >= 3) || (search.name && search.village && search.name.length > 3 && search.village.length > 3)) {
+            if ((search.serviceNo && search.serviceNo.trim() && search.serviceNo.trim().length >= 3) || (search.name && search.name.trim() && search.name.trim().length >= 3) || (search.village && search.village.trim() && search.village.trim().length >= 3)) {
                 return true;
             }
             return false;

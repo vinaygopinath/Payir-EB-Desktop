@@ -10,6 +10,13 @@
 angular.module('Payir-EB-Desktop-App')
     .controller('NewPaymentCtrl', function ($scope, VldService, DBService, $filter) {
 
+        DBService.getServiceNos().then(function (results) {
+            console.log("ServiceNoRows = ", results);
+            $scope.serviceNoRows = results;
+        }, function (err) {
+            console.log(err);
+        })
+
         $scope.payment = {};
 
         $scope.savePayment = function () {

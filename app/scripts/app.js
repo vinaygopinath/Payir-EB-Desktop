@@ -8,6 +8,10 @@ angular.module('Payir-EB-Desktop-App', [
                 templateUrl: 'views/newcustomer.html',
                 controller: 'NewCustomerCtrl'
             })
+            .when('/customer/edit/:serviceNo', {
+                templateUrl: 'views/newcustomer.html',
+                controller: 'NewCustomerCtrl'
+            })
             .when('/payment/new', {
                 templateUrl: 'views/newpayment.html',
                 controller: 'NewPaymentCtrl'

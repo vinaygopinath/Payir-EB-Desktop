@@ -105,16 +105,32 @@ angular.module('Payir-EB-Desktop-App')
 
         function searchCustomers(search) {
             var deferred = $q.defer();
-            var query, queryParams;
-            if (search.serviceNo) {
-                query = DBStrings.SEARCH_CUSTOMERS_SNO;
-                queryParams = ["%" + search.serviceNo.trim() + "%"];
-            } else if (search.name && search.village) {
-                query = DBStrings.SEARCH_CUSTOMERS_NM_VILL;
-                queryParams = ["%" + search.name.trim() + "%", "%" + search.village.trim() + "%"];
-            }
 
             openConnection().then(function (connection) {
+                var query = DBStrings.SEARCH_CUSTOMERS_BASE;
+                var queryParams = new Array();
+                var filterCount = 0;
+                if (search.serviceNo) {
+                    query = query + "serviceNo LIKE " + connection.escape("%" + search.serviceNo.trim() + "%");
+                    filterCount++;
+                }
+
+                if (search.name) {
+                    query = (filterCount > 0) ? (query + " AND ") : query;
+                    query += "name LIKE " + connection.escape("%" + search.name.trim() + "%");
+                    filterCount++;
+                }
+
+                if (search.village) {
+                    query = (filterCount > 0) ? (query + " AND ") : query;
+                    query += "village LIKE " + connection.escape("%" + search.village.trim() + "%");
+                    filterCount++;
+                }
+
+                query += " ORDER BY name,village";
+
+                console.log("Query is ", query);
+                console.log("QueryParams are ", queryParams);
                 var qry = connection.query(query, queryParams, function (err, results) {
                     console.log("Executed query was ", qry.sql);
                     if (err) {
@@ -139,7 +155,7 @@ angular.module('Payir-EB-Desktop-App')
                     } else {
                         var cust;
                         if (result && result.length == 1) {
-                            cust = result[0]; //Copy result to cust. This will be modified
+                            cust = angular.copy(result[0]); //Copy result to cust. This will be modified
 
                             cust.username = cust.username ? cust.username : 'N/A';
                             cust.email = cust.email ? cust.email : 'N/A';
@@ -182,12 +198,102 @@ angular.module('Payir-EB-Desktop-App')
             return deferred.promise;
         }
 
+        function getDistinctVillages() {
+            var deferred = $q.defer();
+            openConnection().then(function (connection) {
+                //TODO Investigate how to get village array instead of RowDataPacket arrays containing vill properties
+                var query = connection.query(DBStrings.GET_DISTINCT_VILLAGES, function (err, results) {
+                    console.log("Get distinct villages query = ", query.sql);
+                    if (err) {
+                        deferred.reject("Error fetching distint villages " + err);
+                    } else {
+                        deferred.resolve(results);
+                    }
+                });
+            }, function (err) {
+                deferred.reject(err);
+            });
+            return deferred.promise;
+        }
+
+        function getServiceNos(input) {
+            var deferred = $q.defer();
+            openConnection().then(function (connection) {
+                var query = DBStrings.GET_SERVICE_NOS_BASE + connection.escape("%" + (input ? input : "") + "%");
+                var qry = connection.query(query, function (err, results) {
+                    console.log("Get serviceNos query = ", qry.sql);
+                    if (err) {
+                        deferred.reject("Error fetching serviceNos " + err);
+                    } else {
+                        deferred.resolve(results);
+                    }
+                });
+            }, function (err) {
+                deferred.reject(err);
+            });
+            return deferred.promise;
+        }
+
+        function deleteCustomer(serviceNo) {
+            var deferred = $q.defer();
+            openConnection().then(function (connection) {
+                connection.query(DBStrings.DELETE_CUSTOMER, serviceNo, function (err, results) {
+                    if (err || results.affectedRows != 1) {
+                        deferred.reject("Error deleting customer " + err);
+                    }
+                    deferred.resolve(results);
+                });
+            }, function (err) {
+                deferred.reject(err);
+            })
+            return deferred.promise;
+        }
+
+        function updateCustomer(customer) {
+            var deferred = $q.defer();
+
+            openConnection().then(function (connection) {
+                    var sNo = customer.serviceNo;
+
+                    //Using the original customer object would result in a node-mysql duplicate entry error
+                    var dbCustomer = {};
+                    dbCustomer.address = customer.address;
+                    dbCustomer.dateOfBirth = customer.dateOfBirth;
+                    dbCustomer.dateOfJoining = customer.dateOfJoining;
+                    dbCustomer.dueDate = customer.dueDate;
+                    dbCustomer.email = customer.email;
+                    dbCustomer.mobileNo = customer.mobileNo;
+                    dbCustomer.name = customer.name;
+                    dbCustomer.password = customer.password;
+                    dbCustomer.username = customer.username;
+                    dbCustomer.village = customer.village;
+                    var query = connection.query(DBStrings.UPDATE_CUSTOMER_BASE + connection.escape(sNo), dbCustomer, function (err, result) {
+                        console.log("Update query is ", query.sql);
+                        if (err) {
+                            deferred.reject("Error while updating: " + err.stack);
+                        } else {
+                            deferred.resolve();
+                        }
+                    });
+
+                },
+                function (errMsg) {
+                    deferred.reject(errMsg);
+                });
+
+            return deferred.promise;
+        }
+
         return {
             "openConnection": openConnection,
             "saveCustomer": saveCustomer,
             "savePayment": savePayment,
             "searchCustomers": searchCustomers,
             "getCustomer": getCustomer,
-            "getPaymentHistory": getPaymentHistory
+            "getPaymentHistory": getPaymentHistory,
+            "getDistinctVillages": getDistinctVillages,
+            "getServiceNos": getServiceNos,
+            "deleteCustomer": deleteCustomer,
+            "updateCustomer": updateCustomer
         }
     });
