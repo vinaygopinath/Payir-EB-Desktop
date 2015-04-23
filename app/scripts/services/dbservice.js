@@ -38,12 +38,12 @@ angular.module('Payir-EB-Desktop-App')
                         if (err) {
                             //Create the DB in case it does not exist
                             var query = connection.query(DBStrings.CREATE_DB, function (err2) {
-                                console.log("Create DB query is ", query.sql);
+                                //console.log("Create DB query is ", query.sql);
                                 if (err2) {
                                     deferred.reject("Error creating DB: " + err);
                                 } else {
                                     var q2 = connection.query(DBStrings.USE_DB + DBStrings.CREATE_CUST_TBL + DBStrings.CREATE_BILL_PAY_TBL, function (err3) {
-                                        console.log("Create tables query is ", q2.sql);
+                                        //console.log("Create tables query is ", q2.sql);
                                         if (err3) {
                                             deferred.reject("Error creating tables: " + err);
                                         } else {
@@ -53,7 +53,6 @@ angular.module('Payir-EB-Desktop-App')
                                     })
                                 }
                             });
-                            console.log("create query = ", query.sql);
                         } else {
                             _connection = connection;
                             deferred.resolve(_connection);
@@ -69,7 +68,6 @@ angular.module('Payir-EB-Desktop-App')
             var deferred = $q.defer();
 
             openConnection().then(function (connection) {
-                console.log("Opened connection. Trying to save", customer);
                 connection.query(DBStrings.INSERT_CUST, customer, function (err, result) {
                     if (err) {
                         deferred.reject("Error while inserting: " + err.stack);
@@ -91,7 +89,7 @@ angular.module('Payir-EB-Desktop-App')
             openConnection().then(function (connection) {
                 connection.query(DBStrings.INSERT_BILL, payment, function (err, result) {
                     if (err) {
-                        deferred.reject("Error while inserting " + err);
+                        deferred.reject(err);
                     } else {
                         deferred.resolve();
                     }
@@ -129,10 +127,10 @@ angular.module('Payir-EB-Desktop-App')
 
                 query += " ORDER BY name,village";
 
-                console.log("Query is ", query);
-                console.log("QueryParams are ", queryParams);
+                //                console.log("Query is ", query);
+                //                console.log("QueryParams are ", queryParams);
                 var qry = connection.query(query, queryParams, function (err, results) {
-                    console.log("Executed query was ", qry.sql);
+                    //                    console.log("Executed query was ", qry.sql);
                     if (err) {
                         deferred.reject("Error while querying " + err);
                     } else {
@@ -149,12 +147,13 @@ angular.module('Payir-EB-Desktop-App')
             var deferred = $q.defer();
             openConnection().then(function (connection) {
                 var query = connection.query(DBStrings.GET_CUSTOMER, serviceNo, function (err, result) {
-                    console.log("Executed query was ", query.sql);
+                    //                    console.log("Executed query was ", query.sql);
                     if (err) {
                         deferred.reject("Error while fetching customer " + err);
                     } else {
                         var cust;
                         if (result && result.length == 1) {
+                            console.log("getCustomer = ", result);
                             cust = angular.copy(result[0]); //Copy result to cust. This will be modified
 
                             cust.username = cust.username ? cust.username : 'N/A';
@@ -167,10 +166,7 @@ angular.module('Payir-EB-Desktop-App')
                             cust.dueDate = cust.dueDate ? $filter("date")(cust.dueDate, "yyyy-MM-dd") : 'N/A';
                             cust.village = cust.village ? cust.village : 'N/A';
 
-                            //TODO Provide original result as cust.raw
-                            //Currently, the object is modified because cust also refers to result[0]
                             cust.raw = result[0]; //Also copy result to raw. This will be preserved as is.
-                            console.log("GetCustomer = ", cust);
                         }
                         deferred.resolve(cust);
                     }
@@ -185,7 +181,7 @@ angular.module('Payir-EB-Desktop-App')
             var deferred = $q.defer();
             openConnection().then(function (connection) {
                 var query = connection.query(DBStrings.GET_PAYMENT_HIST, serviceNo, function (err, results) {
-                    console.log("Get Payment History Query = " + query.sql);
+                    //                    console.log("Get Payment History Query = " + query.sql);
                     if (err) {
                         deferred.reject("Error while fetching payment history: " + err);
                     } else {
@@ -201,13 +197,16 @@ angular.module('Payir-EB-Desktop-App')
         function getDistinctVillages() {
             var deferred = $q.defer();
             openConnection().then(function (connection) {
-                //TODO Investigate how to get village array instead of RowDataPacket arrays containing vill properties
                 var query = connection.query(DBStrings.GET_DISTINCT_VILLAGES, function (err, results) {
-                    console.log("Get distinct villages query = ", query.sql);
+                    //                    console.log("Get distinct villages query = ", query.sql);
                     if (err) {
                         deferred.reject("Error fetching distint villages " + err);
                     } else {
-                        deferred.resolve(results);
+                        var villages = new Array();
+                        results.forEach(function (row) {
+                            villages.push(row.village);
+                        });
+                        deferred.resolve(villages);
                     }
                 });
             }, function (err) {
@@ -216,16 +215,18 @@ angular.module('Payir-EB-Desktop-App')
             return deferred.promise;
         }
 
-        function getServiceNos(input) {
+        function getServiceNos() {
             var deferred = $q.defer();
             openConnection().then(function (connection) {
-                var query = DBStrings.GET_SERVICE_NOS_BASE + connection.escape("%" + (input ? input : "") + "%");
-                var qry = connection.query(query, function (err, results) {
-                    console.log("Get serviceNos query = ", qry.sql);
+                connection.query(DBStrings.GET_SERVICE_NOS, function (err, results) {
                     if (err) {
                         deferred.reject("Error fetching serviceNos " + err);
                     } else {
-                        deferred.resolve(results);
+                        var serviceNos = new Array();
+                        results.forEach(function (row) {
+                            serviceNos.push(row.serviceNo);
+                        });
+                        deferred.resolve(serviceNos);
                     }
                 });
             }, function (err) {
@@ -257,21 +258,41 @@ angular.module('Payir-EB-Desktop-App')
 
                     //Using the original customer object would result in a node-mysql duplicate entry error
                     var dbCustomer = {};
-                    dbCustomer.address = customer.address;
-                    dbCustomer.dateOfBirth = customer.dateOfBirth;
-                    dbCustomer.dateOfJoining = customer.dateOfJoining;
+                    //The if conditions are necessary to avoid NULL value updates in case of updateDueDate
+                    if (customer.address) {
+                        dbCustomer.address = customer.address;
+                    }
+                    if (customer.dateOfBirth) {
+                        dbCustomer.dateOfBirth = customer.dateOfBirth;
+                    }
+                    if (customer.dateOfJoining) {
+                        dbCustomer.dateOfJoining = customer.dateOfJoining;
+                    }
                     dbCustomer.dueDate = customer.dueDate;
-                    dbCustomer.email = customer.email;
-                    dbCustomer.mobileNo = customer.mobileNo;
-                    dbCustomer.name = customer.name;
-                    dbCustomer.password = customer.password;
-                    dbCustomer.username = customer.username;
-                    dbCustomer.village = customer.village;
+                    if (customer.email) {
+                        dbCustomer.email = customer.email;
+                    }
+                    if (customer.mobileNo) {
+                        dbCustomer.mobileNo = customer.mobileNo;
+                    }
+                    if (customer.name) {
+                        dbCustomer.name = customer.name;
+                    }
+                    if (customer.password) {
+                        dbCustomer.password = customer.password;
+                    }
+                    if (customer.username) {
+                        dbCustomer.username = customer.username;
+                    }
+                    if (customer.village) {
+                        dbCustomer.village = customer.village;
+                    }
                     var query = connection.query(DBStrings.UPDATE_CUSTOMER_BASE + connection.escape(sNo), dbCustomer, function (err, result) {
                         console.log("Update query is ", query.sql);
                         if (err) {
                             deferred.reject("Error while updating: " + err.stack);
                         } else {
+                            console.log("Update customer success");
                             deferred.resolve();
                         }
                     });
@@ -281,6 +302,131 @@ angular.module('Payir-EB-Desktop-App')
                     deferred.reject(errMsg);
                 });
 
+            return deferred.promise;
+        }
+
+        function getTimeReport(dateRange) {
+            var deferred = $q.defer();
+            openConnection().then(function (connection) {
+                    var queryParams = new Array();
+                    for (var i = 0; i < 4; i++) {
+                        queryParams.push(dateRange.startDate);
+                        queryParams.push(dateRange.endDate);
+                    }
+                    var timeReportQuery = DBStrings.GET_TIME_REPORT_CUST_STAT + DBStrings.GET_TIME_REPORT_BILL_STAT + DBStrings.GET_TIME_REPORT_AMT_STAT + DBStrings.GET_TIME_REPORT;
+                    var query = connection.query(timeReportQuery, queryParams, function (err, results) {
+                        if (err) {
+                            deferred.reject("Error while fetching time report " + err);
+                        }
+                        //                        console.log("Time report query = ", query.sql);
+                        var resObj = {};
+                        if (results[0]) {
+                            resObj.custCount = results[0][0].custCount;
+                        }
+                        if (results[1]) {
+                            resObj.paymentCount = results[1][0].paymentCount;
+                        }
+                        if (results[2]) {
+                            resObj.totalAmount = results[2][0].totalAmount;
+                        }
+                        if (results[3]) {
+                            resObj.tableRows = results[3];
+                        }
+                        console.log("resObj = ", resObj);
+                        deferred.resolve(resObj);
+                    });
+                },
+                function (errMsg) {
+                    deferred.reject(errMsg);
+                });
+            return deferred.promise;
+        }
+
+        function getNotPaidReport() {
+            var deferred = $q.defer();
+            openConnection().then(function (connection) {
+                    connection.query(DBStrings.GET_NOT_PAID_REPORT, function (err, results) {
+                        if (err) {
+                            deferred.reject("Error while getting not paid report " + err);
+                        } else {
+                            deferred.resolve(results);
+                        }
+                    });
+                },
+                function (errMsg) {
+                    deferred.reject(errMsg);
+                });
+            return deferred.promise;
+        }
+
+        function getPaymentDueReport() {
+            var deferred = $q.defer();
+            openConnection().then(function (connection) {
+                var date = new Date();
+                //The first day of the current month
+                var firstDay = $filter("date")(new Date(date.getFullYear(), date.getMonth(), 1), "yyyy-MM-dd");
+                //The zero-th day of the next month = the last day of the current month
+                var lastDay = $filter("date")(new Date(date.getFullYear(), date.getMonth() + 1, 0), "yyyy-MM-dd");
+
+                connection.query(DBStrings.GET_PAYMENT_DUE_REPORT, [firstDay, lastDay], function (err, results) {
+                    if (err) {
+                        deferred.reject("Error fetching payment due report = " + err);
+                    } else {
+                        deferred.resolve(results);
+                    }
+                });
+            }, function (errMsg) {
+                deferred.reject(errMsg);
+            })
+            return deferred.promise;
+        }
+
+        function updateDueDate(payment) {
+            var deferred = $q.defer();
+            getCustomer(payment.serviceNo).then(function (customer) {
+                    console.log("Received due date = ", customer.dueDate);
+                    var MS_PER_DAY = 1000 * 60 * 60 * 24;
+                    var dueDate = new Date(customer.dueDate);
+                    var paymentDate = new Date(payment.paymentDate);
+                    console.log("presentDueDate = ", dueDate);
+                    console.log("paymentDate = ", paymentDate);
+                    console.log("difference = ", dueDate - paymentDate);
+                    var nextDueDate;
+
+                    nextDueDate = new Date(dueDate);
+                    nextDueDate.setMonth(nextDueDate.getMonth() + 2);
+
+                    updateCustomer({
+                        serviceNo: payment.serviceNo,
+                        dueDate: $filter("date")(nextDueDate, "yyyy-MM-dd")
+                    }).then(function (succ) {
+                        deferred.resolve(succ);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
+
+
+                    //TODO [Low] Consider checking for late and skipped payments (jumping over a billing cycle)
+                    //                    if (dueDate - paymentDate >= 0) {
+                    //                        //Normal payment. Advance dueDate by two months
+                    //                        console.log("**Normal payment**");
+                    //                        nextDueDate = new Date(dueDate);
+                    //                        nextDueDate.setMonth(nextDueDate.getMonth() + 2);
+                    //                    } else {
+                    //                        //Late payment. Calc if one payment cycle has been skipped
+                    //                        console.log("**Late payment**");
+                    //                        nextDueDate = new Date(dueDate);
+                    //                        do {
+                    //                            nextDueDate.setMonth(nextDueDate.getMonth() + 2);
+                    //                        } while (nextDueDate - paymentDate < 0);
+                    //                        console.log("Next Due Date (NDD) = ", nextDueDate);
+                    //                        var daysToNDD = (nextDueDate - paymentDate) / MS_PER_DAY;
+                    //                        var daysSinceDD = ()
+                    //                    }
+                },
+                function (err) {
+                    deferred.reject(err);
+                });
             return deferred.promise;
         }
 
@@ -294,6 +440,10 @@ angular.module('Payir-EB-Desktop-App')
             "getDistinctVillages": getDistinctVillages,
             "getServiceNos": getServiceNos,
             "deleteCustomer": deleteCustomer,
-            "updateCustomer": updateCustomer
+            "updateCustomer": updateCustomer,
+            "getTimeReport": getTimeReport,
+            "getNotPaidReport": getNotPaidReport,
+            "getPaymentDueReport": getPaymentDueReport,
+            "updateDueDate": updateDueDate
         }
     });

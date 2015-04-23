@@ -6,39 +6,42 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="../bower_components/allmighty-autocomplete/style/autocomplete.css" />
+    <link rel="stylesheet" href="../bower_components/ngDialog/css/ngDialog.min.css" />
+    <link rel="stylesheet" href="../bower_components/ngDialog/css/ngDialog-theme-default.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Payir EB Data Management</a>
+    <div class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="navbar-header ">
+            <a class="navbar-brand " href="# ">Payir EB Data Management</a>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-3 col-md-2 sidebar payir-sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#/customer/new">New Customer</a>
+    <div class="row ">
+        <div class="col-xs-3 col-md-2 sidebar payir-sidebar ">
+            <ul class="nav nav-sidebar ">
+                <li class="active "><a href="#/customer/new ">New Customer</a>
                 </li>
-                <li><a href="#/payment/new">Bill Payment</a>
+                <li><a href="#/payment/new ">Bill Payment</a>
                 </li>
-                <li><a ng-click="toggleReports()">Reports</a>
+                <li><a ng-click="toggleReports() ">Reports</a>
                 </li>
                 <!-- TODO Expand menu on Reports click -->
-                <li class="sub-menu-item animate-show" ng-show="showReports"><a href="#/report/individual">Individual Report</a>
+                <li class="sub-menu-item animate-show " ng-show="showReports "><a href="#/report/individual ">Individual Report</a>
                 </li>
-                <li class="sub-menu-item animate-show" ng-show="showReports"><a href="#/report/time">Time Report</a>
+                <li class="sub-menu-item animate-show " ng-show="showReports "><a href="#/report/time ">Time Report</a>
                 </li>
-                <li class="sub-menu-item animate-show" ng-show="showReports"><a href="#/report/paymentdue">Payment Due Report</a>
+                <li class="sub-menu-item animate-show " ng-show="showReports "><a href="#/report/paymentdue ">Payment Due Report</a>
                 </li>
-                <li class="sub-menu-item animate-show" ng-show="showReports"><a href="#/report/notpaid">Not Paid Report</a>
+                <li class="sub-menu-item animate-show " ng-show="showReports "><a href="#/report/notpaid ">Not Paid Report</a>
                 </li>
             </ul>
         </div>
 
-        <div class="col-xs-9 col-md-10 payir-main-area">
+        <div class="col-xs-9 col-md-10 payir-main-area ">
             <div ng-view>
             </div>
         </div>
@@ -46,25 +49,28 @@
 
 
     <!-- build:js scripts/vendor.js -->
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
-    <script src="../bower_components/angular-messages/angular-messages.js"></script>
-    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular/angular.js "></script>
+    <script src="../bower_components/angular-route/angular-route.js "></script>
+    <script src="../bower_components/angular-messages/angular-messages.js "></script>
+    <script src="../bower_components/angular-animate/angular-animate.js "></script>
+    <script src="../bower_components/allmighty-autocomplete/script/autocomplete.js"></script>
+    <script src="../bower_components/ngDialog/js/ngDialog.min.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/intro.js"></script>
-    <script src="scripts/controllers/newcustomer.js"></script>
-    <script src="scripts/controllers/newpayment.js"></script>
-    <script src="scripts/controllers/individualreport.js"></script>
-    <script src="scripts/controllers/timereport.js"></script>
-    <script src="scripts/controllers/paymentduereport.js"></script>
-    <script src="scripts/controllers/notpaidreport.js"></script>
-    <script src="scripts/controllers/individualreportsearch.js"></script>
-    <script src="scripts/services/dbservice.js"></script>
-    <script src="scripts/services/dbstrings.js"></script>
-    <script src="scripts/services/vldservice.js"></script>
+    <script src="scripts/app.js "></script>
+    <script src="scripts/controllers/intro.js "></script>
+    <script src="scripts/controllers/newcustomer.js "></script>
+    <script src="scripts/controllers/newpayment.js "></script>
+    <script src="scripts/controllers/individualreport.js "></script>
+    <script src="scripts/controllers/timereport.js "></script>
+    <script src="scripts/controllers/paymentduereport.js "></script>
+    <script src="scripts/controllers/notpaidreport.js "></script>
+    <script src="scripts/controllers/individualreportsearch.js "></script>
+    <script src="scripts/services/dbservice.js "></script>
+    <script src="scripts/services/dbstrings.js "></script>
+    <script src="scripts/services/vldservice.js "></script>
+    <script src="scripts/services/errorcode.js"></script>
     <!-- endbuild -->
 
     <!-- Dev build ONLY! -->
@@ -73,8 +79,9 @@
         var gaze = new Gaze('**/*');
 
         gaze.on('all', function (event, filepath) {
-            if (location)
+            if (location) {
                 location.reload();
+            }
         });
     </script>
 </body>

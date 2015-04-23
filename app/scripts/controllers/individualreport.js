@@ -8,7 +8,7 @@
  * Controller of the packageApp
  */
 angular.module('Payir-EB-Desktop-App')
-    .controller('IndividualReportCtrl', function ($scope, $routeParams, DBService, $filter, $location) {
+    .controller('IndividualReportCtrl', function ($scope, $routeParams, DBService, $filter, $location, ngDialog) {
 
         if (!$routeParams.serviceNo) {
             $scope.hasNoCust = true;
@@ -45,16 +45,23 @@ angular.module('Payir-EB-Desktop-App')
             $scope.hasHistError = true;
         });
 
+        //Reference: http://archugs.blogspot.in/2014/12/angularjs-ngDialog.html
         $scope.deleteCustomer = function () {
-            //TODO Show dialog and receive confirmation 
-            //Dialog message: Are you sure you want to delete all details of <name>?
-            // Warning: This will delete their details and their payment history
 
-            DBService.deleteCustomer($scope.cust.serviceNo).then(function (succ) {
-                console.log("Successfully deleted customer ", succ);
+            ngDialog.openConfirm({
+                scope: $scope,
+                template: 'views/confirm-delete.html'
+            }).then(function (val) {
+                if (val === 1) {
+                    DBService.deleteCustomer($scope.cust.serviceNo).then(function (succ) {
+                        console.log("Successfully deleted customer ", succ);
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
             }, function (err) {
-                console.log(err);
-            })
+                console.log("Received NO");
+            });
         };
 
         $scope.editCustomer = function () {

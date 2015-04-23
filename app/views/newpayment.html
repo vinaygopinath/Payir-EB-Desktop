@@ -3,20 +3,23 @@
         <h3 class="payir-heading">Bill Payment</h3>
     </div>
 </div>
+
+<p class="alert alert-success animate-show" ng-show="saveSucc">Customer data was saved!</p>
+<p class="alert alert-danger animate-show" ng-show="saveFailed">There was an error while saving data</p>
+<p class="alert alert-warning animate-show" ng-show="hasInpError">Your input has errors. Please correct them</p>
+
 <div class="row">
     <div class="col-xs-offset-1 col-xs-5 col-md-offset-1 col-md-3">
         <form name="payForm">
 
             <div class="form-group">
                 <label>Service No.</label>
-                <pre>{{payment.serviceNo}}</pre>
-                <select ng-model="payment.serviceNo">
-                    <option ng-repeat="row in serviceNoRows">{{row.serviceNo}}</option>
-                </select>
-                <input type="text" name="serviceNo" class="form-control" placeholder="A001" ng-model="payment.serviceNo" pattern="[0-9]+" ng-minlength="3" ng-maxlength="9" required>
-                <ng-messages for="payForm.serviceNo.$error" class="form-error" ng-messages-include="views/error-messages.html">
-                    <ng-message when="pattern" class="message">This is an invalid number</ng-message>
-                </ng-messages>
+                <autocomplete id="serviceNo" ng-model="payment.serviceNo" data="serviceNos" attr-input-class="form-control" attr-placeholder="12345678910">
+                </autocomplete>
+                <div class="message animate-show" ng-show="!payment.serviceNo">
+                    This value is required
+                </div>
+                <div class="message animate-show" ng-show="payment.serviceNo && serviceNos.indexOf(payment.serviceNo)==-1">Please enter an existing service number or provide <a href="/customer/new">new customer details</a> first</div>
             </div>
 
             <div class="form-group">

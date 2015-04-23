@@ -119,3 +119,19 @@ Margin right medium
 .form-error > .message.ng-enter.ng-enter-active {
     opacity: 1;
 }
+
+.autocomplete ul {
+    padding-left: 0;
+    background-color: white;
+}
+
+.autocomplete input {
+    font-size: 1em;
+}
+
+.autocomplete li {
+    width: 90%;
+    padding-left: 10%;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+}

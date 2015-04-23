@@ -1,16 +1,16 @@
 {
-    "name": "ebproject",
-    "main": "index.html",
-    "version": "0.0.1",
-    "single-instance": true,
-    "window": {
-        "title": "EBProject",
-        "width": 650,
-        "height": 650,
-        "min_width": 650,
-        "min_height": 650,
-        "toolbar": true,
-        "icon": "images/icon.png"
-    },
-    "chromium-args": "--child-clean-exit"
+  "name": "ebproject",
+  "main": "index.html",
+  "version": "0.9.0",
+  "single-instance": true,
+  "window": {
+    "title": "EBProject",
+    "width": 650,
+    "height": 650,
+    "min_width": 650,
+    "min_height": 650,
+    "toolbar": true,
+    "icon": "images/icon.png"
+  },
+  "chromium-args": "--child-clean-exit"
 }

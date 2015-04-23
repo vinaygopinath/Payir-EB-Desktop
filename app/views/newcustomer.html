@@ -5,9 +5,9 @@
     </div>
 </div>
 
-<p class="animate-show" ng-show="saveSucc">Customer data was saved!</p>
-<p class="alert alert-warning animate-show" ng-show="saveFailed">There was an error while saving data</p>
-<p class="animate-show" ng-show="hasInpErr">Your input has errors. Please correct them</p>
+<p class="alert alert-success animate-show" ng-show="saveSucc">Customer data was saved!</p>
+<p class="alert alert-danger animate-show" ng-show="saveFailed">There was an error while saving data</p>
+<p class="alert alert-warning animate-show" ng-show="hasInpError">Your input has errors. Please correct them</p>
 
 <!-- Input boxes for customer information -->
 <div class="row">
@@ -89,14 +89,15 @@
 
             <div class="form-group">
                 <label>Village</label>
-                <pre>{{cust.village}}</pre>
-                <input type="text" name="village" class="form-control" placeholder="Thenur" ng-model="cust.village" ng-minlength="3" ng-maxlength="15" pattern="[a-zA-Z ]*" required>
-                <select class="form-control" placeholder="Select village" ng-model="cust.village">
-                    <option ng-repeat="row in villageRows">{{row.village}}</option>
-                </select>
-                <ng-messages for="custForm2.village.$error" class="form-error" ng-messages-include="views/error-messages.html">
-                    <ng-message when="pattern" class="message">This is an invalid village</ng-message>
-                </ng-messages>
+                <autocomplete id="village" ng-model="cust.village" data="villages" attr-placeholder="Thenur" attr-input-class="form-control">
+                </autocomplete>
+
+                <div class="message animate-show" ng-show="!cust.village">
+                    This value is required
+                </div>
+                <div class="message animate-show" ng-show="cust.village && villages.indexOf(cust.village)==-1">
+                    You are about to create a new village. Are you sure?
+                </div>
             </div>
 
             <div class="form-group">
@@ -116,6 +117,6 @@
         <button type="submit" class="btn btn-success" ng-click="saveCustomer()">
             {{ isEditing ? "Update" : "Save"}}
         </button>
-        <button class="btn btn-danger" ng-click="clearCustomer()">Clear</button>
+        <button class="btn btn-danger" ng-click="clearCustomer()" ng-show="!isEditing">Clear</button>
     </div>
 </div>

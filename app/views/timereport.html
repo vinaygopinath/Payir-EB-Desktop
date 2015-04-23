@@ -14,47 +14,76 @@
         <label>End Date</label>
     </div>
     <div class="col-xs-offset-1 col-xs-4 col-md-offset-1 col-md-3">
-        <input type="date" class="form-control">
+        <input type="date" class="form-control" ng-model="range.startDate" ng-max="today">
     </div>
     <div class="col-xs-4 col-md-3">
-        <input type="date" class="form-control">
+        <input type="date" class="form-control" ng-model="range.endDate" ng-max="today">
     </div>
-    <button type="search" class="btn btn-primary">Search</button>
+    <button type="search" class="btn btn-sm btn-primary" ng-click="searchTimeReport()">Search</button>
+</div>
+
+<div class="row mts">
+    <div class="col-xs-offset-1 col-xs-11 col-md-offset-1 col-md-offset-11">
+        <div class="alert alert-warning animate-show" ng-show="isInvalidSearch">
+            Please provide the time range - start date and end date
+        </div>
+        <div class="alert alert-danger animate-show" ng-show="hasError">
+            Unexpected error while loading time report
+        </div>
+        <div class="alert alert-success animate-show" ng-show="timeReportRows && timeReportRows.length == 0">
+            No results found between {{range.startDate | date:'dd-MM-yyyy'}} and {{range.endDate| date:'dd-MM-yyyy'}}
+        </div>
+    </div>
 </div>
 
 <!-- Show quick statistics on the activity during the time range -->
-<div class="row mtm mbm">
-    <div class="col-xs-offset-1 col-xs-6 col-md-offset-1 col-md-3">
+<div class="row mtm mbm animate-show" ng-show="custCount && paymentCount && totalAmount">
+    <div class=" col-xs-offset-1 col-xs-6 col-md-offset-1 col-md-3 ">
         <p>Total Number of Customers</p>
         <p>Total Number of Bill Payments</p>
         <p>Total Amount</p>
     </div>
-    <div class="col-xs-3 col-md-3">
+    <div class="col-xs-3 col-md-3 ">
         <p>
-            <b>100</b>
+            <b>{{custCount}}</b>
         </p>
         <p>
-            <b>100</b>
+            <b>{{paymentCount}}</b>
         </p>
         <p>
-            <b>100</b>
+            <b>{{totalAmount}}</b>
         </p>
     </div>
 </div>
 
 <!-- Show detailed table of bill payment -->
-<div class="row">
-    <div class="col-xs-offset-1 col-xs-10 col-md-offset-1 col-md-10">
-        <table class="table table-bordered">
-            <tr>
-                <th>S.No.</th>
-                <th>Date</th>
-                <th>Service No.</th>
-                <th>Name</th>
-                <th>Village</th>
-                <th>Amount</th>
-            </tr>
-        </table>
+<div class="row animate-show" ng-show="timeReportRows && timeReportRows.length > 0">
+    <div class="col-xs-offset-1 col-xs-10 col-md-offset-1 col-md-10 ">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Date</th>
+                        <th>Service No.</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Village</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in timeReportRows">
+                        <td>{{$index+1}}</td>
+                        <td>{{row.paymentDate | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{row.serviceNo}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.username}}</td>
+                        <td>{{row.village}}</td>
+                        <td>{{row.amount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-

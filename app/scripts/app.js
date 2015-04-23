@@ -1,7 +1,9 @@
 angular.module('Payir-EB-Desktop-App', [
 'ngRoute',
 'ngMessages',
-'ngAnimate'
+'ngAnimate',
+'autocomplete',
+    'ngDialog'
 ]).config(function ($routeProvider) {
         $routeProvider
             .when('/customer/new', {
@@ -44,7 +46,7 @@ angular.module('Payir-EB-Desktop-App', [
                 redirectTo: '/intro'
             });
     })
-    .run(['$rootScope', 'DBService', 'VldService', '$http', function ($rootScope, DBService, VldService, $http) {
+    .run(['$rootScope', 'DBService', 'VldService', '$http', 'ErrorCode', function ($rootScope, DBService, VldService, $http, ErrorCode) {
         $rootScope.showReports = false;
         $rootScope.toggleReports = function () {
             console.log("Toggling report");
@@ -110,38 +112,70 @@ angular.module('Payir-EB-Desktop-App', [
             minimizeToTray();
         });
 
+        function formatError(sqlError) {
+            console.log("Sending error = ", sqlError);
+            var errResponse = {};
+            errResponse.errNo = sqlError.errno;
+            if (!errResponse.errNo) {
+                errResponse.custom = true;
+                if (sqlError.toString().indexOf("ECONNREFUSED") != -1) {
+                    errResponse.errNo = ErrorCode.CONN_REFUSED;
+                }
+            }
+            return JSON.stringify(errResponse);
+        };
+
+        //        var mockPayment = {
+        //            serviceNo: "234567",
+        //            paymentDate: "2015-04-30"
+        //        }
+        //
+        //        DBService.updateDueDate(mockPayment).then(function (suc) {
+        //            console.log("successed = ", suc);
+        //        }, function (err) {
+        //            console.log("errored = ", err);
+        //        })
+
 
         var http = require("http");
         var url = require("url");
         var server = http.createServer(function (req, res) {
+            var body = "";
+            res.setHeader('Content-Type', 'application/json');
 
             req.on('data', function (chunk) {
-                try {
-                    //TODO Check endpoint
-                    //TODO Set up error codes for every possible error
-                    var paymentInfo = JSON.parse(chunk);
-                    console.log("Received object = ", paymentInfo);
-                    if (VldService.isValidPayment(paymentInfo)) {
-                        console.log("Valid payment");
-                        DBService.savePayment(paymentInfo).then(function (succ) {
-                            res.statusCode = 200;
-                            return res.end("Saved!");
-                        }, function (err) {
-                            res.statusCode = 400;
-                            return res.end("Unable to save! " + err);
-                        });
-                    } else {
-                        res.statusCode = 400;
-                        return res.end("Invalid PaymentInfo object");
-                    }
-                } catch (err) {
-                    res.statusCode = 400;
-                    return res.end("JSON parsing error! " + err.message);
-                }
+                body += chunk;
             });
 
             req.on('end', function () {
-                console.log("End was called");
+                console.log("End was called", req);
+                if (req.method === "POST" && req.url === "/billPayment") {
+                    try {
+                        var paymentInfo = JSON.parse(body);
+                        console.log("Received object = ", paymentInfo);
+                        if (VldService.isValidPayment(paymentInfo)) {
+                            console.log("Valid payment");
+
+                            DBService.savePayment(paymentInfo).then(function () {
+                                return DBService.updateDueDate(paymentInfo);
+                            }).then(function () {
+                                res.statusCode = 200;
+                                return res.end("Saved and due date updated!");
+                            }, function (err) {
+                                res.statusCode = 400;
+                                console.log("Save payment failed or update due date failed", err);
+                                return res.end(formatError(err));
+                            });
+
+                        } else {
+                            res.statusCode = 400;
+                            return res.end("Invalid PaymentInfo object");
+                        }
+                    } catch (err) {
+                        res.statusCode = 400;
+                        return res.end(formatError(err));
+                    }
+                }
             })
 
 

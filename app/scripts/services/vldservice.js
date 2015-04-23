@@ -37,9 +37,20 @@ angular.module('Payir-EB-Desktop-App')
             return false;
         }
 
+        function isValidTimeReportSearch(search) {
+            console.log("search = ", search);
+            console.log("startDate = ", search.startDate && search.startDate instanceof Date);
+            console.log("endDate = ", search.endDate && search.endDate instanceof Date);
+            if ((search.startDate && search.startDate instanceof Date) && (search.endDate && search.endDate instanceof Date)) {
+                return true;
+            }
+            return false;
+        }
+
         return {
             "isValidCustomer": isValidCustomer,
             "isValidPayment": isValidPayment,
-            "isValidIndReportSearch": isValidIndReportSearch
+            "isValidIndReportSearch": isValidIndReportSearch,
+            "isValidTimeReportSearch": isValidTimeReportSearch
         }
     });

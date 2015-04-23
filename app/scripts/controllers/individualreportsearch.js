@@ -12,6 +12,21 @@ angular.module('Payir-EB-Desktop-App')
 
         $scope.search = {};
 
+        DBService.getDistinctVillages().then(function (succ) {
+            console.log("Received villages = ", succ);
+            $scope.villages = succ;
+        }, function (err) {
+            console.log("Error = ", err);
+            //TODO Do nothing here?
+        });
+
+        DBService.getServiceNos().then(function (results) {
+            console.log("ServiceNos = ", results);
+            $scope.serviceNos = results;
+        }, function (err) {
+            console.log(err);
+        });
+
         $scope.runSearch = function () {
             console.log("Inside search()");
             if (VldService.isValidIndReportSearch($scope.search)) {
@@ -53,4 +68,5 @@ angular.module('Payir-EB-Desktop-App')
             $scope.results = undefined;
             $scope.isInvalidSearch = false;
         };
+
     });
