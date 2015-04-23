@@ -13,24 +13,24 @@ angular.module('Payir-EB-Desktop-App')
         $scope.search = {};
 
         DBService.getDistinctVillages().then(function (succ) {
-            console.log("Received villages = ", succ);
+            console.log('Received villages = ', succ);
             $scope.villages = succ;
         }, function (err) {
-            console.log("Error = ", err);
+            console.log('Error = ', err);
             //TODO Do nothing here?
         });
 
         DBService.getServiceNos().then(function (results) {
-            console.log("ServiceNos = ", results);
+            console.log('ServiceNos = ', results);
             $scope.serviceNos = results;
         }, function (err) {
             console.log(err);
         });
 
         $scope.runSearch = function () {
-            console.log("Inside search()");
+            console.log('Inside search()');
             if (VldService.isValidIndReportSearch($scope.search)) {
-                console.log("Validation returned true");
+                console.log('Validation returned true');
                 $scope.isLoading = true;
                 DBService.searchCustomers($scope.search).then(function (results) {
                     $scope.isLoading = false;
@@ -43,7 +43,7 @@ angular.module('Payir-EB-Desktop-App')
                             $scope.hasNoResults = false;
                         }, 5000);
                     }
-                }, function (err) {
+                }, function () {
                     $scope.isLoading = false;
                     $scope.results = undefined;
                     $scope.hasError = true;

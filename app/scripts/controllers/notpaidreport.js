@@ -13,7 +13,7 @@ angular.module('Payir-EB-Desktop-App')
         $scope.isLoading = true;
         DBService.getNotPaidReport().then(function (resultRows) {
             $scope.isLoading = false;
-            console.log("Received not paid report ", resultRows);
+            console.log('Received not paid report ', resultRows);
             $scope.notPaidRows = resultRows;
             if (resultRows.length === 0) {
                 $scope.hasNoResults = true;

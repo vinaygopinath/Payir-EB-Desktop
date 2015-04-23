@@ -1,12 +1,12 @@
 angular.module('Payir-EB-Desktop-App', [
-'ngRoute',
-'ngMessages',
-'ngAnimate',
-'autocomplete',
+    'ngRoute',
+    'ngMessages',
+    'ngAnimate',
+    'autocomplete',
     'ngDialog'
 ]).config(function ($routeProvider) {
-        $routeProvider
-            .when('/customer/new', {
+        'use strict';
+        $routeProvider.when('/customer/new', {
                 templateUrl: 'views/newcustomer.html',
                 controller: 'NewCustomerCtrl'
             })
@@ -39,17 +39,17 @@ angular.module('Payir-EB-Desktop-App', [
                 controller: 'NotPaidReportCtrl'
             })
             .when('/intro', {
-                templateUrl: 'views/intro.html',
-                controller: 'IntroCtrl'
+                templateUrl: 'views/intro.html'
             })
             .otherwise({
                 redirectTo: '/intro'
             });
     })
     .run(['$rootScope', 'DBService', 'VldService', '$http', 'ErrorCode', function ($rootScope, DBService, VldService, $http, ErrorCode) {
+        'use strict';
         $rootScope.showReports = false;
         $rootScope.toggleReports = function () {
-            console.log("Toggling report");
+            console.log('Toggling report');
             $rootScope.showReports = !$rootScope.showReports;
         };
 
@@ -113,73 +113,70 @@ angular.module('Payir-EB-Desktop-App', [
         });
 
         function formatError(sqlError) {
-            console.log("Sending error = ", sqlError);
+            console.log('Sending error = ', sqlError);
             var errResponse = {};
             errResponse.errNo = sqlError.errno;
             if (!errResponse.errNo) {
                 errResponse.custom = true;
-                if (sqlError.toString().indexOf("ECONNREFUSED") != -1) {
+                if (sqlError.toString().indexOf('ECONNREFUSED') !== -1) {
                     errResponse.errNo = ErrorCode.CONN_REFUSED;
                 }
             }
             return JSON.stringify(errResponse);
-        };
+        }
 
         //        var mockPayment = {
-        //            serviceNo: "234567",
-        //            paymentDate: "2015-04-30"
+        //            serviceNo: '234567',
+        //            paymentDate: '2015-04-30'
         //        }
         //
         //        DBService.updateDueDate(mockPayment).then(function (suc) {
-        //            console.log("successed = ", suc);
+        //            console.log('successed = ', suc);
         //        }, function (err) {
-        //            console.log("errored = ", err);
+        //            console.log('errored = ', err);
         //        })
 
 
-        var http = require("http");
-        var url = require("url");
-        var server = http.createServer(function (req, res) {
-            var body = "";
-            res.setHeader('Content-Type', 'application/json');
+        var http = require('http'),
+            server = http.createServer(function (req, res) {
+                var body = '';
+                res.setHeader('Content-Type', 'application/json');
 
-            req.on('data', function (chunk) {
-                body += chunk;
-            });
+                req.on('data', function (chunk) {
+                    body += chunk;
+                });
 
-            req.on('end', function () {
-                console.log("End was called", req);
-                if (req.method === "POST" && req.url === "/billPayment") {
-                    try {
-                        var paymentInfo = JSON.parse(body);
-                        console.log("Received object = ", paymentInfo);
-                        if (VldService.isValidPayment(paymentInfo)) {
-                            console.log("Valid payment");
+                req.on('end', function () {
+                    console.log('End was called', req);
+                    if (req.method === 'POST' && req.url === '/billPayment') {
+                        try {
+                            var paymentInfo = JSON.parse(body);
+                            console.log('Received object = ', paymentInfo);
+                            if (VldService.isValidPayment(paymentInfo)) {
+                                console.log('Valid payment');
 
-                            DBService.savePayment(paymentInfo).then(function () {
-                                return DBService.updateDueDate(paymentInfo);
-                            }).then(function () {
-                                res.statusCode = 200;
-                                return res.end("Saved and due date updated!");
-                            }, function (err) {
+                                DBService.savePayment(paymentInfo).then(function () {
+                                    return DBService.updateDueDate(paymentInfo);
+                                }).then(function () {
+                                    res.statusCode = 200;
+                                    return res.end('Saved and due date updated!');
+                                }, function (err) {
+                                    res.statusCode = 400;
+                                    console.log('Save payment failed or update due date failed', err);
+                                    return res.end(formatError(err));
+                                });
+
+                            } else {
                                 res.statusCode = 400;
-                                console.log("Save payment failed or update due date failed", err);
-                                return res.end(formatError(err));
-                            });
-
-                        } else {
+                                return res.end('Invalid PaymentInfo object');
+                            }
+                        } catch (err) {
                             res.statusCode = 400;
-                            return res.end("Invalid PaymentInfo object");
+                            return res.end(formatError(err));
                         }
-                    } catch (err) {
-                        res.statusCode = 400;
-                        return res.end(formatError(err));
                     }
-                }
-            })
-
-
-        });
+                });
+            });
         //TODO Use alternate port address in case of conflict
         //Also modify Chrome extension to check alternate port
         server.listen(5555);

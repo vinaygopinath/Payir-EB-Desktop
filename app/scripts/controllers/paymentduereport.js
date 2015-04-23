@@ -10,10 +10,10 @@
 angular.module('Payir-EB-Desktop-App')
     .controller('PaymentDueReportCtrl', function ($scope, DBService, $location) {
         DBService.getPaymentDueReport().then(function (succ) {
-            console.log("Succ = ", succ);
+            console.log('Succ = ', succ);
             $scope.paymentDueRows = succ;
-        }, function (er) {
-            console.log("error = ", err);
+        }, function () {
+            //console.log('error = ', err);
         });
 
         $scope.openCustomerInfo = function (serviceNo) {

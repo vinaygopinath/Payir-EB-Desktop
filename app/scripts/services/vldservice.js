@@ -9,17 +9,17 @@
  */
 angular.module('Payir-EB-Desktop-App')
     .service('VldService', function Vldservice() {
-        // AngularJS will instantiate a singleton by calling "new" on this function
+        // AngularJS will instantiate a singleton by calling 'new' on this function
 
         //TODO Check if serviceNo needs to be handled as a Number in Customer and Payment objects
         function isValidCustomer(cust, dueDate) {
-            console.log("serviceNo = ", cust.serviceNo);
-            console.log("serviceNo length = ", cust.serviceNo ? (cust.serviceNo + "").length : "missing");
-            console.log("name", cust.name);
-            console.log("name length = ", cust.name ? cust.name.length : "missing");
-            console.log("dueDate = ", dueDate);
-            console.log("village = ", cust.village);
-            console.log("village length = ", cust.village ? cust.village.length : "missing");
+            console.log('serviceNo = ', cust.serviceNo);
+            console.log('serviceNo length = ', cust.serviceNo ? (cust.serviceNo + '').length : 'missing');
+            console.log('name', cust.name);
+            console.log('name length = ', cust.name ? cust.name.length : 'missing');
+            console.log('dueDate = ', dueDate);
+            console.log('village = ', cust.village);
+            console.log('village length = ', cust.village ? cust.village.length : 'missing');
             return (cust.serviceNo && cust.name && cust.serviceNo.toString().length >= 5 && cust.name.length >= 3 && dueDate && cust.village && cust.village.length >= 3);
         }
 
@@ -38,9 +38,9 @@ angular.module('Payir-EB-Desktop-App')
         }
 
         function isValidTimeReportSearch(search) {
-            console.log("search = ", search);
-            console.log("startDate = ", search.startDate && search.startDate instanceof Date);
-            console.log("endDate = ", search.endDate && search.endDate instanceof Date);
+            console.log('search = ', search);
+            console.log('startDate = ', search.startDate && search.startDate instanceof Date);
+            console.log('endDate = ', search.endDate && search.endDate instanceof Date);
             if ((search.startDate && search.startDate instanceof Date) && (search.endDate && search.endDate instanceof Date)) {
                 return true;
             }
@@ -48,9 +48,9 @@ angular.module('Payir-EB-Desktop-App')
         }
 
         return {
-            "isValidCustomer": isValidCustomer,
-            "isValidPayment": isValidPayment,
-            "isValidIndReportSearch": isValidIndReportSearch,
-            "isValidTimeReportSearch": isValidTimeReportSearch
-        }
+            'isValidCustomer': isValidCustomer,
+            'isValidPayment': isValidPayment,
+            'isValidIndReportSearch': isValidIndReportSearch,
+            'isValidTimeReportSearch': isValidTimeReportSearch
+        };
     });

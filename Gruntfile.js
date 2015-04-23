@@ -225,26 +225,28 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '.tmp/concat/scripts',
-                    src: '*.js',
-                    dest: '.tmp/concat/scripts'
+                    cwd: '<%= config.distLinux64 %>/app.nw',
+                    src: ['scripts/{,*/}*.js'],
+                    dest: '<%= config.distLinux64 %>/app.nw'
         }]
             }
         },
         htmlmin: {
-            options: {
-                collapseWhitespace: true,
-                conservativeCollapse: true,
-                collapseBooleanAttributes: true,
-                removeCommentsFromCDATA: true,
-                removeOptionalTags: true
-            },
-            files: [{
-                expand: true,
-                cwd: '<%= yeoman.dist %>',
-                src: ['*.html', 'views/{,*/}*.html'],
-                dest: '<%= yeoman.dist %>'
+            target: {
+                options: {
+                    collapseWhitespace: true,
+                    conservativeCollapse: true,
+                    collapseBooleanAttributes: true,
+                    removeCommentsFromCDATA: true,
+                    removeOptionalTags: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.distLinux64 %>/app.nw',
+                    src: ['*.html', 'views/{,*/}*.html'],
+                    dest: '<%= config.distLinux64 %>/app.nw'
                     }]
+            }
         }
     });
 
@@ -354,10 +356,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dist-linux', [
     'jshint',
-    'htmlmin',
-    'ngmin',
     'clean:distLinux64',
     'copy:appLinux',
+    'htmlmin',
+    'ngmin',
     'createLinuxApp:Linux64'
     ]);
 

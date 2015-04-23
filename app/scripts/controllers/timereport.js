@@ -20,8 +20,8 @@ angular.module('Payir-EB-Desktop-App')
             $scope.isInvalidSearch = false;
             if (VldService.isValidTimeReportSearch($scope.range)) {
                 var searchRange = {};
-                searchRange.startDate = $filter("date")($scope.range.startDate, "yyyy-MM-dd");
-                searchRange.endDate = $filter("date")($scope.range.endDate, "yyyy-MM-dd");
+                searchRange.startDate = $filter('date')($scope.range.startDate, 'yyyy-MM-dd');
+                searchRange.endDate = $filter('date')($scope.range.endDate, 'yyyy-MM-dd');
 
                 DBService.getTimeReport(searchRange).then(function (result) {
                     $scope.custCount = result.custCount;
