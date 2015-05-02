@@ -9,7 +9,6 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('time-grunt')(grunt);
     require('load-grunt-tasks')(grunt);
-
     // configurable paths
     var config = {
         app: 'app',
@@ -94,7 +93,12 @@ module.exports = function (grunt) {
                     cwd: '<%= config.app %>',
                     dest: '<%= config.distLinux64 %>/app.nw',
                     src: '**'
-        }]
+        }, {
+                    expand: true,
+                    cwd: 'node_modules/',
+                    dest: '<%= config.distLinux64 %>/app.nw/node_modules/',
+                    src: 'mysql/**'
+                    }]
             },
             appLinux32: {
                 files: [{
@@ -172,11 +176,18 @@ module.exports = function (grunt) {
             },
             copyWinToTmp: {
                 files: [{
-                    expand: true,
-                    cwd: '<%= config.resources %>/node-webkit/Windows/',
-                    dest: '<%= config.tmp %>/',
-                    src: '**'
-        }]
+                        expand: true,
+                        cwd: '<%= config.resources %>/node-webkit/Windows/',
+                        dest: '<%= config.tmp %>/',
+                        src: '**'
+        },
+                    {
+                        expand: true,
+                        cwd: 'node_modules/',
+                        dest: '<%= config.tmp %>/node_modules/',
+                        src: 'mysql/**'
+                     }
+                       ]
             }
         },
         compress: {
@@ -377,7 +388,7 @@ module.exports = function (grunt) {
     'compress:appToTmp',
     'rename:zipToApp',
     'createWindowsApp',
-    'compress:finalWindowsApp'
+   'compress:finalWindowsApp'
     ]);
 
     grunt.registerTask('dist-mac', [

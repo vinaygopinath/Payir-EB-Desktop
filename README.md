@@ -58,6 +58,10 @@ The executables will be available in `dist`
 
 Janani, Sekar, Selvarani and Vanaja from the IT team at Payir
 
+##Known quirks
+
+To build the final packaged app for different platforms, it is necessary to create a node_modules directory in app/ and copy the mysql module into it. This is to prevent "module not found" errors in the app.
+
 ##Licence
 
 Copyright 2015 Vinay Gopinath

@@ -3,4 +3,6 @@ bower_components/
 dist/
 resources/
 tmp/
+buildTmp/
 .DS_Store
+/app/npm-debug.log
