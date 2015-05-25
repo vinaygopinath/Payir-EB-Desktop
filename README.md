@@ -1,6 +1,8 @@
 #Payir EB Data Management 
 ##Desktop app
 
+![Image](http://i.imgur.com/FsfwfG3.gif)
+
 A desktop app built using AngularJS and Node-Webkit (NW.js) meant for use by people who perform electricity board (EB) online payments as a service. The app stores information about Tamil Nadu Electricity Board (EB) customers and tracks their online payments. Check out the accompanying Chrome extension
 
 This app was built in collaboration with the data entry team at the rural empowerment NGO, Payir, in Thenur village, Tamil Nadu. To find out more or donate, visit [payir.org](http://payir.org)
@@ -16,10 +18,10 @@ This app uses the [Bower](http://bower.io) package manager. To install the exter
 >```bower install```
 
 Subsequently, run this
->```npm install #may need sudo in some cases```
+>```npm install```
 
 To run this app, you need nw. You can install this globally using
->```npm install -g nw #may need sudo in some cases```
+>```npm install -g nw```
 
 You're all set up. Now you can run the app like so
 >```nw /path/to/eb_project_desktop/app/```
